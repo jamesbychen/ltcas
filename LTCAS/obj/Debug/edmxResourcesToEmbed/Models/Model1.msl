@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ltc_dbModelStoreContainer" CdmEntityContainer="ltc_dbEntities">
+    <EntitySetMapping Name="login_user">
+      <EntityTypeMapping TypeName="ltc_dbModel.login_user">
+        <MappingFragment StoreEntitySet="login_user">
+          <ScalarProperty Name="sn" ColumnName="sn" />
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="logintoken" ColumnName="logintoken" />
+          <ScalarProperty Name="logintime" ColumnName="logintime" />
+          <ScalarProperty Name="ip" ColumnName="ip" />
+          <ScalarProperty Name="usermail" ColumnName="usermail" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
