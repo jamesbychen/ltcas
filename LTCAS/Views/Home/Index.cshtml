@@ -10,10 +10,20 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    <link rel="stylesheet" href="~/Content/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+    </script>
 </head>
 <body>
-    <div> Hello World!
-    <br />Token= @ViewBag.Token
+    <div class="container"><h1>My first booststrap</h1>
+        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Toolips">Tooltips on top</button>
     </div>
 </body>
 </html>
