@@ -1,17 +1,53 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="ltc_dbModelStoreContainer" CdmEntityContainer="ltc_dbEntities">
-    <EntitySetMapping Name="login_user">
-      <EntityTypeMapping TypeName="ltc_dbModel.login_user">
-        <MappingFragment StoreEntitySet="login_user">
-          <ScalarProperty Name="sn" ColumnName="sn" />
+    <EntitySetMapping Name="ELMAH_Error">
+      <EntityTypeMapping TypeName="ltc_dbModel.ELMAH_Error">
+        <MappingFragment StoreEntitySet="ELMAH_Error">
+          <ScalarProperty Name="AllXml" ColumnName="AllXml" />
+          <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+          <ScalarProperty Name="TimeUtc" ColumnName="TimeUtc" />
+          <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+          <ScalarProperty Name="User" ColumnName="User" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="Source" ColumnName="Source" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Host" ColumnName="Host" />
+          <ScalarProperty Name="Application" ColumnName="Application" />
+          <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="login_record">
+      <EntityTypeMapping TypeName="ltc_dbModel.login_record">
+        <MappingFragment StoreEntitySet="login_record">
+          <ScalarProperty Name="remark" ColumnName="remark" />
+          <ScalarProperty Name="recaction" ColumnName="recaction" />
+          <ScalarProperty Name="rectime" ColumnName="rectime" />
           <ScalarProperty Name="userid" ColumnName="userid" />
-          <ScalarProperty Name="username" ColumnName="username" />
-          <ScalarProperty Name="password" ColumnName="password" />
-          <ScalarProperty Name="logintoken" ColumnName="logintoken" />
-          <ScalarProperty Name="logintime" ColumnName="logintime" />
-          <ScalarProperty Name="ip" ColumnName="ip" />
+          <ScalarProperty Name="sn" ColumnName="sn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="login_users">
+      <EntityTypeMapping TypeName="ltc_dbModel.login_users">
+        <MappingFragment StoreEntitySet="login_users">
           <ScalarProperty Name="usermail" ColumnName="usermail" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="userrole" ColumnName="userrole" />
+          <ScalarProperty Name="shopno" ColumnName="shopno" />
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="sn" ColumnName="sn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="user_roles">
+      <EntityTypeMapping TypeName="ltc_dbModel.user_roles">
+        <MappingFragment StoreEntitySet="user_roles">
+          <ScalarProperty Name="remark" ColumnName="remark" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="sn" ColumnName="sn" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

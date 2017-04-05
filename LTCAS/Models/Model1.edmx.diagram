@@ -5,7 +5,10 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="df5e43a7783b447097e039d1f9d4077e" Name="Diagram1">
-        <EntityTypeShape EntityType="ltc_dbModel.login_user" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ltc_dbModel.ELMAH_Error" Width="1.5" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ltc_dbModel.login_record" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="ltc_dbModel.login_users" Width="1.5" PointX="0.75" PointY="0.875" />
+        <EntityTypeShape EntityType="ltc_dbModel.user_roles" Width="1.5" PointX="5.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

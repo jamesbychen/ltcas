@@ -25,6 +25,9 @@ namespace LTCAS.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<login_user> login_user { get; set; }
+        public virtual DbSet<ELMAH_Error> ELMAH_Error { get; set; }
+        public virtual DbSet<login_record> login_record { get; set; }
+        public virtual DbSet<login_users> login_users { get; set; }
+        public virtual DbSet<user_roles> user_roles { get; set; }
     }
 }

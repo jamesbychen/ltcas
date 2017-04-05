@@ -4,61 +4,168 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ltc_dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="login_user">
+    <Schema Namespace="ltc_dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ELMAH_Error">
+          <Key>
+            <PropertyRef Name="ErrorId" />
+          </Key>
+          <Property Name="ErrorId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Application" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="Host" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Source" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="Message" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="User" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StatusCode" Type="int" Nullable="false" />
+          <Property Name="TimeUtc" Type="datetime" Nullable="false" />
+          <Property Name="Sequence" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AllXml" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="login_record">
+          <Key>
+            <PropertyRef Name="sn" />
+          </Key>
+          <Property Name="sn" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userid" Type="varchar" MaxLength="20" />
+          <Property Name="rectime" Type="datetime" />
+          <Property Name="recaction" Type="varchar" MaxLength="50" />
+          <Property Name="remark" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="login_users">
           <Key>
             <PropertyRef Name="sn" />
           </Key>
           <Property Name="sn" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="userid" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="shopno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="userrole" Type="int" Nullable="false" />
           <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="password" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="logintoken" Type="varchar(max)" Nullable="false" />
-          <Property Name="logintime" Type="datetime" Nullable="false" />
-          <Property Name="ip" Type="varchar" MaxLength="15" />
           <Property Name="usermail" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="user_roles">
+          <Key>
+            <PropertyRef Name="sn" />
+          </Key>
+          <Property Name="sn" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="remark" Type="nvarchar" MaxLength="200" />
+        </EntityType>
         <EntityContainer Name="ltc_dbModelStoreContainer">
-          <EntitySet Name="login_user" EntityType="Self.login_user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ELMAH_Error" EntityType="Self.ELMAH_Error" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="login_record" EntityType="Self.login_record" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="login_users" EntityType="Self.login_users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user_roles" EntityType="Self.user_roles" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ltc_dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="login_user">
+        <EntityContainer Name="ltc_dbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ELMAH_Error" EntityType="ltc_dbModel.ELMAH_Error" />
+          <EntitySet Name="login_record" EntityType="ltc_dbModel.login_record" />
+          <EntitySet Name="login_users" EntityType="ltc_dbModel.login_users" />
+          <EntitySet Name="user_roles" EntityType="ltc_dbModel.user_roles" />
+        </EntityContainer>
+        <EntityType Name="ELMAH_Error">
+          <Key>
+            <PropertyRef Name="ErrorId" />
+          </Key>
+          <Property Name="ErrorId" Type="Guid" Nullable="false" />
+          <Property Name="Application" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Host" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Source" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="User" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StatusCode" Type="Int32" Nullable="false" />
+          <Property Name="TimeUtc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Sequence" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AllXml" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="login_record">
           <Key>
             <PropertyRef Name="sn" />
           </Key>
           <Property Name="sn" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="userid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="logintoken" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="logintime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ip" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="userid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="rectime" Type="DateTime" Precision="3" />
+          <Property Name="recaction" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="remark" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="login_users">
+          <Key>
+            <PropertyRef Name="sn" />
+          </Key>
+          <Property Name="sn" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userid" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="shopno" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="userrole" Type="Int32" Nullable="false" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="usermail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityContainer Name="ltc_dbEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="login_user" EntityType="Self.login_user" />
-        </EntityContainer>
+        <EntityType Name="user_roles">
+          <Key>
+            <PropertyRef Name="sn" />
+          </Key>
+          <Property Name="sn" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="remark" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ltc_dbModelStoreContainer" CdmEntityContainer="ltc_dbEntities">
-          <EntitySetMapping Name="login_user">
-            <EntityTypeMapping TypeName="ltc_dbModel.login_user">
-              <MappingFragment StoreEntitySet="login_user">
-                <ScalarProperty Name="sn" ColumnName="sn" />
+          <EntitySetMapping Name="ELMAH_Error">
+            <EntityTypeMapping TypeName="ltc_dbModel.ELMAH_Error">
+              <MappingFragment StoreEntitySet="ELMAH_Error">
+                <ScalarProperty Name="AllXml" ColumnName="AllXml" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="TimeUtc" ColumnName="TimeUtc" />
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+                <ScalarProperty Name="User" ColumnName="User" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Host" ColumnName="Host" />
+                <ScalarProperty Name="Application" ColumnName="Application" />
+                <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="login_record">
+            <EntityTypeMapping TypeName="ltc_dbModel.login_record">
+              <MappingFragment StoreEntitySet="login_record">
+                <ScalarProperty Name="remark" ColumnName="remark" />
+                <ScalarProperty Name="recaction" ColumnName="recaction" />
+                <ScalarProperty Name="rectime" ColumnName="rectime" />
                 <ScalarProperty Name="userid" ColumnName="userid" />
-                <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="logintoken" ColumnName="logintoken" />
-                <ScalarProperty Name="logintime" ColumnName="logintime" />
-                <ScalarProperty Name="ip" ColumnName="ip" />
+                <ScalarProperty Name="sn" ColumnName="sn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="login_users">
+            <EntityTypeMapping TypeName="ltc_dbModel.login_users">
+              <MappingFragment StoreEntitySet="login_users">
                 <ScalarProperty Name="usermail" ColumnName="usermail" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="userrole" ColumnName="userrole" />
+                <ScalarProperty Name="shopno" ColumnName="shopno" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="sn" ColumnName="sn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user_roles">
+            <EntityTypeMapping TypeName="ltc_dbModel.user_roles">
+              <MappingFragment StoreEntitySet="user_roles">
+                <ScalarProperty Name="remark" ColumnName="remark" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="sn" ColumnName="sn" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

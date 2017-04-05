@@ -9,33 +9,67 @@ namespace LTCAS.Controllers
 {
     public class HomeController : Controller
     {
+        PublicFunctionController pub = new PublicFunctionController();
+
         // GET: Home
         public ActionResult Index()
         {
-            PublicFunctionController pub = new PublicFunctionController();
             string token = pub.generateTimestampToken();
             string timestamp = pub.decodeTimestampToken(token).ToString();
             ViewBag.Token = token;
             ViewBag.Timestamp = timestamp;
-            writeTokenCookie("write cookie");
-            ViewBag.Cookie = readTokenCookie();
+            writeTokenCookie(token);
+            bool over = pub.isTokenOver(token);
+            //ViewBag.Cookie = token;
+            //ViewBag.Browser = pub.getBrowserInfo(Request.Browser);
+            //ViewBag.Browser = Request.UserAgent;
+            ViewBag.Browser = pub.getOSName(Request.UserAgent);
             return View();
         }
 
         public ActionResult testError()
         {
             //throw new NotImplementedException();
-            Response.StatusCode = 404;
-            throw new HttpException();
-            //return View();
+            //Response.StatusCode = 404;
+            //throw new HttpException();
+            ViewBag.Cookie = readTokenCookie();
+            return View();
         }
 
         //登入畫面
         public ActionResult UserLogin()
         {
-
             return View();
         }
+        [HttpPost]
+        public ActionResult UserLogin(string userid, string password)
+        {
+            if (userid.Length > 0 & password.Length > 0)
+            {
+                string ret = pub.checkLogin(userid, password);
+                if (ret.Length == 0)
+                {
+                    Redirect("/index");
+                }
+                else
+                {
+                    switch (ret)
+                    {
+                        case "userid":
+                            ViewBag.Message = "無此帳號請重新輸入";
+                            break;
+                        case "password":
+                            ViewBag.Message = "密碼錯誤！";
+                            break;
+                        default:
+                            ViewBag.Message = "發生未知的錯誤！";
+                            break;
+                    }
+                }
+            }
+            return View();
+        }
+
 
         //管理員：新增/修改使用者資訊
         public ActionResult EditLoginUser()
@@ -47,19 +81,18 @@ namespace LTCAS.Controllers
             request.AddHeader("cache-control", "no-cache");
             IRestResponse response = client.Execute(request);
             var json = Newtonsoft.Json.Linq.JObject.Parse(response.Content);
-            login_user lu = new login_user();
+            login_users lu = new login_users();
             lu.sn = int.Parse(json["sn"].ToString());
             lu.userid = json["userid"].ToString();
             lu.username = json["username"].ToString();
             lu.password = json["password"].ToString();
-            lu.logintime = DateTime.Parse(json["logintime"].ToString());
             return View(lu);
         }
 
         //忘記密碼，傳送新的密碼去使用者的EMAIL
         public ActionResult ForgetPassword()
         {
-            
+
             return View();
         }
 
@@ -104,6 +137,25 @@ namespace LTCAS.Controllers
             return View();
         }
 
+
+        //手動新增帳號
+        public ActionResult AddLoginUser()
+        {
+            ViewBag.userrole = pub.getRoleList();//取得腳色清單
+            //default value
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddLoginUser(AddUser au)
+        {
+            ViewBag.userrole = au.userrole;
+
+            ViewBag.message = pub.addLoginUser(au.userid, au.shopno, au.username,au.selectRole, au.usermail, au.password);
+
+            return View();
+        }
+
         #region R/W Token to cookie
         private void writeTokenCookie(string token)
         {
@@ -116,7 +168,7 @@ namespace LTCAS.Controllers
         private string readTokenCookie()
         {
             System.Web.HttpCookie cookie = Request.Cookies["logintoken"];
-            if(cookie!=null)
+            if (cookie != null)
                 return cookie.Value;
             else
             {
@@ -124,5 +176,16 @@ namespace LTCAS.Controllers
             }
         }
         #endregion
+    }
+
+    public class AddUser
+    {
+        public string userid { get; set; }
+        public string shopno { get; set; }
+        public List<SelectListItem> userrole { get; set; }
+        public string selectRole { get; set; }
+        public string username { get; set; }
+        public string usermail { get; set; }
+        public string password { get; set; }
     }
 }

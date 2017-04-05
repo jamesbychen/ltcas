@@ -17,39 +17,39 @@ namespace LTCAS.WebApi
         private ltc_dbEntities db = new ltc_dbEntities();
 
         // GET: api/loginuser
-        public IQueryable<login_user> Getlogin_user()
+        public IQueryable<login_users> Getlogin_userss()
         {
-            return db.login_user;
+            return db.login_users;
         }
 
         // GET: api/loginuser/5
-        [ResponseType(typeof(login_user))]
-        public IHttpActionResult Getlogin_user(int id)
+        [ResponseType(typeof(login_users))]
+        public IHttpActionResult Getlogin_userss(int id)
         {
-            login_user login_user = db.login_user.Find(id);
-            if (login_user == null)
+            login_users login_users = db.login_users.Find(id);
+            if (login_users == null)
             {
                 return NotFound();
             }
 
-            return Ok(login_user);
+            return Ok(login_users);
         }
 
         // PUT: api/loginuser/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult Putlogin_user(int id, login_user login_user)
+        public IHttpActionResult Putlogin_userss(int id, login_users login_users)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != login_user.sn)
+            if (id != login_users.sn)
             {
                 return BadRequest();
             }
 
-            db.Entry(login_user).State = System.Data.Entity.EntityState.Modified;
+            db.Entry(login_users).State = System.Data.Entity.EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace LTCAS.WebApi
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!login_userExists(id))
+                if (!login_usersExists(id))
                 {
                     return NotFound();
                 }
@@ -71,34 +71,34 @@ namespace LTCAS.WebApi
         }
 
         // POST: api/loginuser
-        [ResponseType(typeof(login_user))]
-        public IHttpActionResult Postlogin_user(login_user login_user)
+        [ResponseType(typeof(login_users))]
+        public IHttpActionResult Postlogin_users(login_users login_users)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.login_user.Add(login_user);
+            db.login_users.Add(login_users);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = login_user.sn }, login_user);
+            return CreatedAtRoute("DefaultApi", new { id = login_users.sn }, login_users);
         }
 
         // DELETE: api/loginuser/5
-        [ResponseType(typeof(login_user))]
-        public IHttpActionResult Deletelogin_user(int id)
+        [ResponseType(typeof(login_users))]
+        public IHttpActionResult Deletelogin_users(int id)
         {
-            login_user login_user = db.login_user.Find(id);
-            if (login_user == null)
+            login_users login_users = db.login_users.Find(id);
+            if (login_users == null)
             {
                 return NotFound();
             }
 
-            db.login_user.Remove(login_user);
+            db.login_users.Remove(login_users);
             db.SaveChanges();
 
-            return Ok(login_user);
+            return Ok(login_users);
         }
 
         protected override void Dispose(bool disposing)
@@ -110,9 +110,9 @@ namespace LTCAS.WebApi
             base.Dispose(disposing);
         }
 
-        private bool login_userExists(int id)
+        private bool login_usersExists(int id)
         {
-            return db.login_user.Count(e => e.sn == id) > 0;
+            return db.login_users.Count(e => e.sn == id) > 0;
         }
     }
 }

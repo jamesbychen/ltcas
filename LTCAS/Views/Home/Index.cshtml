@@ -1,4 +1,4 @@
-﻿@model LTCAS.Models.login_user
+﻿@model LTCAS.Models.login_users
 
 @{
     Layout = null;
@@ -22,8 +22,10 @@
     </script>
 </head>
 <body>
-    <div class="container"><h1>My first booststrap</h1>
-        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Toolips">Tooltips on top</button>
-    </div>
+    <div class="container">
+        <div class="label-info">TimeStamp:@ViewBag.TimeStamp</div>
+        <div class="label-default">Cookie:@ViewBag.Token</div>
+        <div>@Html.Raw(ViewBag.Browser)</div>
+        </div>
 </body>
 </html>

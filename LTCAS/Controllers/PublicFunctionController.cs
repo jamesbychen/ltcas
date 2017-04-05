@@ -3,15 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using LTCAS.Models;
+using System.Data.Entity;
 
 namespace LTCAS.Controllers
 {
     public class PublicFunctionController : Controller
     {
+        private ltc_dbEntities db = new ltc_dbEntities();
         //產生時間戳記的TOKEN
         public string generateTimestampToken()
         {
-            byte[] time = BitConverter.GetBytes(DateTime.UtcNow.ToBinary());
+            DateTime now = DateTime.Now;
+            //test
+            now = DateTime.Now.AddMinutes(-20.0);
+            //
+            byte[] time = BitConverter.GetBytes(now.ToBinary());
             byte[] key = Guid.NewGuid().ToByteArray();
             string token = Convert.ToBase64String(time.Concat(key).ToArray());
             return token;
@@ -22,9 +29,137 @@ namespace LTCAS.Controllers
         {
             byte[] data = Convert.FromBase64String(token);
             DateTime when = DateTime.FromBinary(BitConverter.ToInt64(data, 0));
-            
+
             return when;
         }
 
+        //檢查TOKEN中的時間是否逾時
+        public bool isTokenOver(string token)
+        {
+            bool overtime = true;
+            int limit = 120;//預設為2hr(120min)
+            DateTime tokenTime = decodeTimestampToken(token);
+            TimeSpan period = DateTime.Now - tokenTime;
+            if (period.Minutes > limit)
+                overtime = true;//逾時成立
+            else
+                overtime = false;//尚在時限內
+            return overtime;
+        }
+
+        public string checkLogin(string id, string password)
+        {
+            //ltc_dbEntities db = new ltc_dbEntities();
+
+            string returnMsg = "";
+            login_users lu = db.login_users.FirstOrDefault(p => p.userid == id);
+            if (lu == null)
+            {
+                returnMsg = "userid";//Can not find user ID
+            }
+            else
+            {
+                if (!password.Equals(lu.password))
+                {
+                    returnMsg = "password";//Wrong password
+                }
+            }
+            return returnMsg;
+        }
+
+        public List<SelectListItem> getRoleList()
+        {
+            List<user_roles> lur = db.user_roles.ToList();
+            List<SelectListItem> item = new List<SelectListItem>();
+            item.Add(new SelectListItem() { Value = "", Text = "----------", Selected = true });
+            foreach (user_roles ur in lur)
+            {
+                item.Add(new SelectListItem() { Value = ur.sn.ToString(), Text = ur.name.ToString() });
+            }
+            return item;
+        }
+
+        public string addLoginUser(string userid, string shopno, string username, string userrole, string useremail, string password)
+        {
+            //檢查是否已有此帳號
+            string dup = checkLogin(userid, "");
+            if (dup.Equals("password"))
+            {
+                return "帳號已重複請重新輸入！";
+            }
+            else
+            {
+                login_users lu = new login_users();
+                lu.userid = userid;
+                lu.username = username;
+                lu.shopno = shopno;
+                lu.userrole = int.Parse(userrole);
+                lu.usermail = useremail;
+                lu.password = password;
+                db.login_users.Add(lu);
+                db.SaveChanges();
+                return "Add User-" + username + "Success!";
+            }
+        }
+
+        //
+        public string getBrowserInfo(HttpBrowserCapabilitiesBase browser)
+        {
+            string s = "Browser Capabilities<br />"
+        + "Type = " + browser.Type + "<br />"
+        + "Name = " + browser.Browser + "<br />"
+        + "Version = " + browser.Version + "<br />"
+        + "Major Version = " + browser.MajorVersion + "<br />"
+        + "Minor Version = " + browser.MinorVersion + "<br />"
+        + "Platform = " + browser.Platform + "<br />"
+        + "Is Beta = " + browser.Beta + "<br />"
+        + "Is Crawler = " + browser.Crawler + "<br />"
+        + "Is AOL = " + browser.AOL + "<br />"
+        + "Is Win16 = " + browser.Win16 + "<br />"
+        + "Is Win32 = " + browser.Win32 + "<br />"
+        + "Supports Frames = " + browser.Frames + "<br />"
+        + "Supports Tables = " + browser.Tables + "<br />"
+        + "Supports Cookies = " + browser.Cookies + "<br />"
+        + "Supports VBScript = " + browser.VBScript + "<br />"
+        + "Supports JavaScript = " +
+            browser.EcmaScriptVersion.ToString() + "<br />"
+        + "Supports Java Applets = " + browser.JavaApplets + "<br />"
+        + "Supports ActiveX Controls = " + browser.ActiveXControls
+              + "<br />";
+            return s;
+        }
+
+        //OS Version
+        public string getOSName(string ver)
+        {
+            string os = "";
+            if(ver.IndexOf("Windows NT 10.0")>-1)
+            {
+                os = "Windows 10";
+            }else if(ver.IndexOf("Windows NT 6.3")>-1){
+                os = "Windows 8.1 / Windows Server 2012 R2";
+            }
+            else if(ver.IndexOf("Windows NT 6.2")>-1){
+                os = "Windows 8 / Windows Server 2012";
+            }
+            else if (ver.IndexOf("Windows NT 6.1") > -1) {
+                os = "Windows 7 / Windows Server 2008 R2";
+            }
+            else if (ver.IndexOf("Windows NT 6.0") > -1) {
+                os = "Windows Vista / Windows Server 2008";
+            }
+            else if (ver.IndexOf("Windows NT 5.2") > -1) {
+                os = "Windows Server 2003 / Windows Server 2003 R2";
+            }
+            else if (ver.IndexOf("Windows NT 5.1") > -1) {
+                os = "Windows XP";
+            }
+            else if (ver.IndexOf("Windows NT 5.0") > -1) {
+                os = "Windows 2000";
+            }
+
+            return os;
+        }
+        
     }
 }
