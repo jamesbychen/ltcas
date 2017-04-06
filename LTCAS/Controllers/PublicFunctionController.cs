@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using LTCAS.Models;
 using System.Data.Entity;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace LTCAS.Controllers
 {
@@ -16,7 +18,7 @@ namespace LTCAS.Controllers
         {
             DateTime now = DateTime.Now;
             //test
-            now = DateTime.Now.AddMinutes(-20.0);
+            //now = DateTime.Now.AddMinutes(-20.0);
             //
             byte[] time = BitConverter.GetBytes(now.ToBinary());
             byte[] key = Guid.NewGuid().ToByteArray();
@@ -59,7 +61,7 @@ namespace LTCAS.Controllers
             }
             else
             {
-                if (!password.Equals(lu.password))
+                if (!mixwithMD5(password).Equals(lu.password))
                 {
                     returnMsg = "password";//Wrong password
                 }
@@ -71,13 +73,22 @@ namespace LTCAS.Controllers
         {
             List<user_roles> lur = db.user_roles.ToList();
             List<SelectListItem> item = new List<SelectListItem>();
+
             item.Add(new SelectListItem() { Value = "", Text = "----------", Selected = true });
             foreach (user_roles ur in lur)
             {
                 item.Add(new SelectListItem() { Value = ur.sn.ToString(), Text = ur.name.ToString() });
             }
+
             return item;
         }
+        public SelectList getRoleList2()
+        {
+            var ur = db.user_roles;
+            SelectList sl = new SelectList(ur,"please select");
+            return sl;
+        }
+
 
         public string addLoginUser(string userid, string shopno, string username, string userrole, string useremail, string password)
         {
@@ -129,37 +140,67 @@ namespace LTCAS.Controllers
             return s;
         }
 
+
         //OS Version
-        public string getOSName(string ver)
+        public string getOSName(string UserAgen)
         {
             string os = "";
-            if(ver.IndexOf("Windows NT 10.0")>-1)
+            if (UserAgen.IndexOf("Windows NT 10.0") > -1)
             {
                 os = "Windows 10";
-            }else if(ver.IndexOf("Windows NT 6.3")>-1){
+            }
+            else if (UserAgen.IndexOf("Windows NT 6.3") > -1)
+            {
                 os = "Windows 8.1 / Windows Server 2012 R2";
             }
-            else if(ver.IndexOf("Windows NT 6.2")>-1){
+            else if (UserAgen.IndexOf("Windows NT 6.2") > -1)
+            {
                 os = "Windows 8 / Windows Server 2012";
             }
-            else if (ver.IndexOf("Windows NT 6.1") > -1) {
+            else if (UserAgen.IndexOf("Windows NT 6.1") > -1)
+            {
                 os = "Windows 7 / Windows Server 2008 R2";
             }
-            else if (ver.IndexOf("Windows NT 6.0") > -1) {
+            else if (UserAgen.IndexOf("Windows NT 6.0") > -1)
+            {
                 os = "Windows Vista / Windows Server 2008";
             }
-            else if (ver.IndexOf("Windows NT 5.2") > -1) {
+            else if (UserAgen.IndexOf("Windows NT 5.2") > -1)
+            {
                 os = "Windows Server 2003 / Windows Server 2003 R2";
             }
-            else if (ver.IndexOf("Windows NT 5.1") > -1) {
+            else if (UserAgen.IndexOf("Windows NT 5.1") > -1)
+            {
                 os = "Windows XP";
             }
-            else if (ver.IndexOf("Windows NT 5.0") > -1) {
+            else if (UserAgen.IndexOf("Windows NT 5.0") > -1)
+            {
                 os = "Windows 2000";
             }
 
             return os;
         }
-        
+
+        //Password with MD5
+        public string mixwithMD5(string originalStr)
+        {
+            string output = "";//輸出
+            string key = "TEST1234";//加密鑰匙
+            byte[] encryptMD5 =MD5.Create().ComputeHash(Encoding.Default.GetBytes(originalStr+key));//字串與KEY相加之後以MD5編碼
+            output = Convert.ToBase64String(encryptMD5);//轉回STRING
+            return output;
+        }
+
+        //Action history record
+        public void actionRecord(string userid,string action,string remark)
+        {
+            login_record rec = new login_record();
+            rec.userid = userid;
+            rec.recaction = action;
+            rec.rectime = DateTime.Now;
+            rec.remark = remark;
+            db.login_record.Add(rec);
+            db.SaveChanges();
+        }
     }
 }

@@ -428,6 +428,7 @@
     <Content Include="Views\Home\testConnection.cshtml" />
     <Content Include="Views\Home\UserLogin.cshtml" />
     <Content Include="Views\Home\AddLoginUser.cshtml" />
+    <Content Include="Views\Home\logout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Account\" />

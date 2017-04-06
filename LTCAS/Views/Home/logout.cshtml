@@ -1,0 +1,21 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>logout</title>
+</head>
+<body>
+    <div>
+        Token: @Request.Cookies["logintoken"].Value <br />
+        Expires: @Request.Cookies["logintoken"].Expires.ToString()
+    </div>
+    <div>User ID: @Request.Cookies["userid"].Value<br />
+    Expires: @Request.Cookies["userid"].Expires.ToString()</div>
+</body>
+</html>
