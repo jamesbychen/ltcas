@@ -40,7 +40,7 @@ namespace LTCAS.Controllers
         {
             bool overtime = true;
             int limit = 120;//預設為2hr(120min)
-            DateTime tokenTime = decodeTimestampToken(token);
+                DateTime tokenTime = decodeTimestampToken(token);
             TimeSpan period = DateTime.Now - tokenTime;
             if (period.Minutes > limit)
                 overtime = true;//逾時成立
@@ -85,7 +85,7 @@ namespace LTCAS.Controllers
         public SelectList getRoleList2()
         {
             var ur = db.user_roles;
-            SelectList sl = new SelectList(ur,"please select");
+            SelectList sl = new SelectList(ur, "sn", "name");
             return sl;
         }
 
@@ -186,13 +186,13 @@ namespace LTCAS.Controllers
         {
             string output = "";//輸出
             string key = "TEST1234";//加密鑰匙
-            byte[] encryptMD5 =MD5.Create().ComputeHash(Encoding.Default.GetBytes(originalStr+key));//字串與KEY相加之後以MD5編碼
+            byte[] encryptMD5 = MD5.Create().ComputeHash(Encoding.Default.GetBytes(originalStr + key));//字串與KEY相加之後以MD5編碼
             output = Convert.ToBase64String(encryptMD5);//轉回STRING
             return output;
         }
 
         //Action history record
-        public void actionRecord(string userid,string action,string remark)
+        public void actionRecord(string userid, string action, string remark)
         {
             login_record rec = new login_record();
             rec.userid = userid;
@@ -202,5 +202,20 @@ namespace LTCAS.Controllers
             db.login_record.Add(rec);
             db.SaveChanges();
         }
+    }
+    public class LoginInfo
+    {
+        private ltc_dbEntities db = new ltc_dbEntities();
+        public string userid { get; set; }
+        public string usermail { get; set; }
+        public string shopno { get; set; }
+        public string shopname { get; set; }
+        public int userrole { get; set; }
+        public string rolename { get; set; }
+        public void getRoleName()
+        {
+            rolename=db.user_roles.Where(m => m.sn == userrole).FirstOrDefault().name.ToString();
+        }
+
     }
 }

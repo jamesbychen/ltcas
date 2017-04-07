@@ -18,24 +18,41 @@ namespace LTCAS.Controllers
             string timestamp = pub.decodeTimestampToken(token).ToString();
             ViewBag.Token = token;
             ViewBag.Timestamp = timestamp;
-            writeTokenCookie("james",token);
+            //writeTokenCookie("james",token);
             //ViewBag.Cookie = token;
             //ViewBag.Browser = pub.getBrowserInfo(Request.Browser);
             //ViewBag.Browser = Request.UserAgent;
             //ViewBag.Browser = pub.getOSName(Request.UserAgent);
             //ViewBag.Browser = Request.UserHostAddress;
-            ViewBag.Browser = "passwrd:1234<br/>MD5 hash:"+pub.mixwithMD5("1234");
+            //ViewBag.Browser = "passwrd:1234<br/>MD5 hash:"+pub.mixwithMD5("1234");
+            //確認登入
+            if (Request.Cookies["logintoken"] != null)
+            {
+                //檢查逾時
+                if(!pub.isTokenOver(Request.Cookies["logintoken"].Value.ToString()))
+                {
+                    //仍在時效內則繼續進行
+                    ltc_dbEntities db = new ltc_dbEntities();
+                    string userid = Request.Cookies["userid"].Value;
+                    login_users user = db.login_users.Where(m => m.userid == userid).FirstOrDefault();
+                    LoginInfo login = new LoginInfo();
+                    login.userid = user.userid;
+                    login.userrole = user.userrole;
+                    login.getRoleName();
+                    ViewBag.Message = "Name:" + user.username + "<br />"
+                        + "Shop No:" + user.shopno + "<br />"
+                        + "Role:" + login.rolename + "<br />"
+                        + "Login Time:" + pub.decodeTimestampToken(Request.Cookies["logintoken"].Value.ToString());
+                }
+            }
+            else
+            {
+                ViewBag.Message = "Redirect";
+                return RedirectToAction("UserLogin");
+            }
             return View();
         }
 
-        public ActionResult testError()
-        {
-            //throw new NotImplementedException();
-            //Response.StatusCode = 404;
-            //throw new HttpException();
-            ViewBag.Cookie = readTokenCookie();
-            return View();
-        }
 
         //登入畫面
         public ActionResult UserLogin()
@@ -52,7 +69,7 @@ namespace LTCAS.Controllers
                 {
                     //登入成功寫入COOKIE
                     writeTokenCookie(userid, pub.generateTimestampToken());
-                    Redirect("/index");
+                    return RedirectToAction("Index");
                 }
                 else
                 {
@@ -105,46 +122,6 @@ namespace LTCAS.Controllers
             return View();
         }
 
-        public ActionResult testConnection()
-        {
-            string connStr = @"Data Source=JAMES-PC\SQLEXPRESS;Initial Catalog=ltc_db;User Id=ltc01;Password=1234;Integrated Security=True";
-            connStr = System.Configuration.ConfigurationManager.ConnectionStrings["Elmah.Sql"].ConnectionString;
-            ViewBag.connstr = connStr;
-            string cmdStr = "select ErrorId from ELMAH_Error";
-            string cmdStr2 = @"INSERT INTO [dbo].[ELMAH_Error]
-           ([Application]
-           ,[Host]
-           ,[Type]
-           ,[Source]
-           ,[Message]
-           ,[User]
-           ,[StatusCode]
-           ,[TimeUtc]
-           ,[AllXml])
-                 VALUES
-           ('app'
-           ,'host'
-           ,'type'
-           ,'source'
-           ,'message'
-           ,'user'
-           ,500
-           ,getdate()
-           ,'<XML></XML>')";
-            //create connection
-            System.Data.SqlClient.SqlConnection conn = new System.Data.SqlClient.SqlConnection(connStr);
-            System.Data.SqlClient.SqlDataAdapter da = new System.Data.SqlClient.SqlDataAdapter(cmdStr, conn);
-            da.InsertCommand = new System.Data.SqlClient.SqlCommand();
-            da.InsertCommand.CommandText = cmdStr2;
-            da.InsertCommand.Connection = conn;
-            //conn.Open();
-            da.InsertCommand.ExecuteNonQuery();
-            //conn.Close();
-            System.Data.DataTable dt = new System.Data.DataTable();
-            da.Fill(dt);
-            ViewBag.ErrorID = dt.Rows[0][0].ToString();
-            return View();
-        }
 
 
         //手動新增帳號
@@ -202,6 +179,7 @@ namespace LTCAS.Controllers
         }
         private void clearCookie()
         {
+            //只是將cookie設定逾時
             if(Request.Cookies["userid"]!=null)
             {
                 Request.Cookies["userid"].Expires = DateTime.Now.AddDays(-1d);
@@ -211,6 +189,58 @@ namespace LTCAS.Controllers
                 Request.Cookies["logintoken"].Expires = DateTime.Now.AddDays(-1d);
             }
         }
+        #endregion
+
+        #region TEST
+        public ActionResult testConnection()
+        {
+            string connStr = @"Data Source=JAMES-PC\SQLEXPRESS;Initial Catalog=ltc_db;User Id=ltc01;Password=1234;Integrated Security=True";
+            connStr = System.Configuration.ConfigurationManager.ConnectionStrings["Elmah.Sql"].ConnectionString;
+            ViewBag.connstr = connStr;
+            string cmdStr = "select ErrorId from ELMAH_Error";
+            string cmdStr2 = @"INSERT INTO [dbo].[ELMAH_Error]
+           ([Application]
+           ,[Host]
+           ,[Type]
+           ,[Source]
+           ,[Message]
+           ,[User]
+           ,[StatusCode]
+           ,[TimeUtc]
+           ,[AllXml])
+                 VALUES
+           ('app'
+           ,'host'
+           ,'type'
+           ,'source'
+           ,'message'
+           ,'user'
+           ,500
+           ,getdate()
+           ,'<XML></XML>')";
+            //create connection
+            System.Data.SqlClient.SqlConnection conn = new System.Data.SqlClient.SqlConnection(connStr);
+            System.Data.SqlClient.SqlDataAdapter da = new System.Data.SqlClient.SqlDataAdapter(cmdStr, conn);
+            da.InsertCommand = new System.Data.SqlClient.SqlCommand();
+            da.InsertCommand.CommandText = cmdStr2;
+            da.InsertCommand.Connection = conn;
+            //conn.Open();
+            da.InsertCommand.ExecuteNonQuery();
+            //conn.Close();
+            System.Data.DataTable dt = new System.Data.DataTable();
+            da.Fill(dt);
+            ViewBag.ErrorID = dt.Rows[0][0].ToString();
+            return View();
+        }
+        public ActionResult testError()
+        {
+            //throw new NotImplementedException();
+            //Response.StatusCode = 404;
+            //throw new HttpException();
+            ViewBag.Cookie = readTokenCookie();
+            return View();
+        }
+
         #endregion
     }
 

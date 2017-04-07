@@ -1,0 +1,34 @@
+﻿@using System.Web.Mvc
+@model LTCAS.Controllers.AddUser
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add User</title>
+    <script type="text/javascript" src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/Content/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+</head>
+<body>
+    <div class="container">
+        @using (Html.BeginForm("AddLoginUser", "Home", FormMethod.Post, new { @class = "form-control" }))
+        {
+            <div>@Html.TextBoxFor(m=>m.userid,new { id="userid",placeholder="User ID",required="required",autofocus="autofocus"})</div>
+            <div>@Html.TextBoxFor(m=>m.username,new { id = "username", placeholder = "User Name" })</div>
+            <div>@Html.TextBoxFor(m=>m.usermail,new { id = "usermail",placeholder="User Mail" })</div>
+            <div>@Html.TextBoxFor(m=>m.shopno,new { id = "shopno", placeholder = "Shop Number", required = "required" })</div>
+            <div>@Html.DropDownListFor(m=>m.selectRole,Model.userrole,"--------",new { id = "userrole",name="userrole" })</div>
+            <div>@Html.PasswordFor(m=>m.password,new { id = "password", placeholder = "Password", required = "required" })</div>
+            <div class="alert">@ViewBag.message</div>
+            <div><input type="submit" value="Add" /></div>
+        }
+    </div>
+</body>
+</html>

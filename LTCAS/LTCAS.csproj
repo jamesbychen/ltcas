@@ -295,8 +295,13 @@
     <Compile Include="Areas\MvcElmahDashboard\Models\Logs\ItemsModel.cs" />
     <Compile Include="Areas\MvcElmahDashboard\Models\Logs\PrevNextRequest.cs" />
     <Compile Include="Areas\MvcElmahDashboard\MvcElmahDashboardAreaRegistration.cs" />
+    <Compile Include="Controllers\DiagnosisController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\HealthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MedicationController.cs" />
+    <Compile Include="Controllers\NursingController.cs" />
+    <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\PublicFunctionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -388,6 +393,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="Properties\PublishProfiles\wwwroot.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -429,10 +435,21 @@
     <Content Include="Views\Home\UserLogin.cshtml" />
     <Content Include="Views\Home\AddLoginUser.cshtml" />
     <Content Include="Views\Home\logout.cshtml" />
+    <Content Include="Views\Shared\_nurse.cshtml" />
+    <Content Include="Views\Shared\_SocialWorker.cshtml" />
+    <Content Include="Views\Shared\_doctor.cshtml" />
+    <Content Include="Views\Shared\_pharmacist.cshtml" />
+    <Content Include="Views\Shared\_nutritionist.cshtml" />
+    <Content Include="Views\Shared\_manager.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Account\" />
+    <Folder Include="Views\Diagnosis\" />
+    <Folder Include="Views\Health\" />
     <Folder Include="Views\Manage\" />
+    <Folder Include="Views\Medication\" />
+    <Folder Include="Views\Nursing\" />
+    <Folder Include="Views\Patient\" />
     <Folder Include="Views\PublicFunction\" />
   </ItemGroup>
   <ItemGroup>
