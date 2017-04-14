@@ -21,5 +21,6 @@ namespace LTCAS.Models
         public string username { get; set; }
         public string password { get; set; }
         public string usermail { get; set; }
+        public int status { get; set; }
     }
 }

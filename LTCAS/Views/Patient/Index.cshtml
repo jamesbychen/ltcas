@@ -1,0 +1,117 @@
+﻿@model IEnumerable<LTCAS.Models.patient_basic_info>
+
+<p>
+    @Html.ActionLink("Create New", "addBasic")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.firstname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lastname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.socialID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sex)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.birthday)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.createdate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.begindate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.telephone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.shopno)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.from_hospital)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.from_hospital_code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.diagnosis)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.closedate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.close_reason)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.remark)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.firstname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lastname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.socialID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sex)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.birthday)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.createdate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.begindate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.telephone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.shopno)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.from_hospital)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.from_hospital_code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.diagnosis)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.closedate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.close_reason)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.remark)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.sn }) |
+            @Html.ActionLink("Details", "Details", new { id=item.sn }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.sn })
+        </td>
+    </tr>
+}
+
+</table>

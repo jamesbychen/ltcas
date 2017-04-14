@@ -446,12 +446,12 @@
     <Content Include="Views\Home\UserLogin.cshtml" />
     <Content Include="Views\Home\AddLoginUser.cshtml" />
     <Content Include="Views\Home\logout.cshtml" />
-    <Content Include="Views\Shared\staff.cshtml" />
+    <Content Include="Views\Shared\_menu.cshtml" />
     <Content Include="Views\Home\Doctors.cshtml" />
-    <Content Include="Views\Patient\_search.cshtml" />
     <Content Include="Views\Diagnosis\Index.cshtml" />
     <Content Include="Views\Medication\Index.cshtml" />
     <Content Include="Views\Patient\addBasic.cshtml" />
+    <Content Include="Views\Patient\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Account\" />

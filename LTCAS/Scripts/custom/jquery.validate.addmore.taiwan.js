@@ -48,7 +48,7 @@ jQuery.validator.addMethod("mobileTaiwan", function (value, element) {
         result = true;
     }
     return result;
-}, "手機號碼不符合格式，僅允許09開頭的10碼數字");
+}, "手機號碼不符合格式，僅允許09開頭的10碼數字（不含符號）");
 
 
 jQuery.validator.addMethod("chkPid", function (value, element) {
@@ -275,6 +275,6 @@ jQuery.validator.addMethod("TWIDCheck", function (value, element, param) {
 jQuery.validator.addMethod("taiwanPhone", function (phone_number, element) {
     phone_number = phone_number.replace(/\s+/g, "");
     return this.optional(element) || phone_number.length > 9 &&
-    phone_number.match(/^(\d{2,3}-?)?\d{7,9}$/g);
-}, "請輸入有效的電話號碼！");
+    phone_number.match(/^(\d{2,4}-?)?\d{6,8}$/g);
+}, "請輸入有效的電話號碼！如：04-23583123 或 0912-123456");
 //

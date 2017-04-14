@@ -1,20 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="ltc_dbModelStoreContainer" CdmEntityContainer="ltc_dbEntities">
-    <EntitySetMapping Name="login_record">
-      <EntityTypeMapping TypeName="ltc_dbModel.login_record">
-        <MappingFragment StoreEntitySet="login_record">
-          <ScalarProperty Name="remark" ColumnName="remark" />
-          <ScalarProperty Name="recaction" ColumnName="recaction" />
-          <ScalarProperty Name="rectime" ColumnName="rectime" />
-          <ScalarProperty Name="userid" ColumnName="userid" />
-          <ScalarProperty Name="sn" ColumnName="sn" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="login_users">
       <EntityTypeMapping TypeName="ltc_dbModel.login_users">
         <MappingFragment StoreEntitySet="login_users">
+          <ScalarProperty Name="status" ColumnName="status" />
           <ScalarProperty Name="usermail" ColumnName="usermail" />
           <ScalarProperty Name="password" ColumnName="password" />
           <ScalarProperty Name="username" ColumnName="username" />
@@ -37,6 +27,7 @@
     <EntitySetMapping Name="patient_basic_info">
       <EntityTypeMapping TypeName="ltc_dbModel.patient_basic_info">
         <MappingFragment StoreEntitySet="patient_basic_info">
+          <ScalarProperty Name="status" ColumnName="status" />
           <ScalarProperty Name="remark" ColumnName="remark" />
           <ScalarProperty Name="close_reason" ColumnName="close_reason" />
           <ScalarProperty Name="closedate" ColumnName="closedate" />
@@ -60,12 +51,24 @@
     <EntitySetMapping Name="patient_contacts">
       <EntityTypeMapping TypeName="ltc_dbModel.patient_contacts">
         <MappingFragment StoreEntitySet="patient_contacts">
+          <ScalarProperty Name="status" ColumnName="status" />
           <ScalarProperty Name="cellphone" ColumnName="cellphone" />
           <ScalarProperty Name="telephone" ColumnName="telephone" />
           <ScalarProperty Name="address" ColumnName="address" />
           <ScalarProperty Name="relationship" ColumnName="relationship" />
           <ScalarProperty Name="contacts" ColumnName="contacts" />
           <ScalarProperty Name="patient_sn" ColumnName="patient_sn" />
+          <ScalarProperty Name="sn" ColumnName="sn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="login_record">
+      <EntityTypeMapping TypeName="ltc_dbModel.login_record">
+        <MappingFragment StoreEntitySet="login_record">
+          <ScalarProperty Name="remark" ColumnName="remark" />
+          <ScalarProperty Name="recaction" ColumnName="recaction" />
+          <ScalarProperty Name="rectime" ColumnName="rectime" />
+          <ScalarProperty Name="usersn" ColumnName="usersn" />
           <ScalarProperty Name="sn" ColumnName="sn" />
         </MappingFragment>
       </EntityTypeMapping>

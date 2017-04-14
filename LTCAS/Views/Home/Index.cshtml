@@ -24,6 +24,11 @@
 <body>
     <div class="container">
         <div class="active">@Html.Raw(ViewBag.Message)</div>
+        <div>
+            Browser: @Request.Browser.Browser.ToString() @Request.Browser.Version.ToString() <br />
+            OS: @ViewBag.userOS <br />
+            IP: @Request.ServerVariables.Get("Remote_Addr").ToString()<br />
+        </div>
         <div class="h1">@Html.ActionLink("Goto Menu Page","Doctors")</div>
         <div class="control-label">此頁為網站主頁，用來判斷權限等狀況後轉址至該功能</div>
     </div>

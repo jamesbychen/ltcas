@@ -24,12 +24,13 @@ namespace LTCAS.Models
         public Nullable<System.DateTime> begindate { get; set; }
         public string address { get; set; }
         public string telephone { get; set; }
-        public Nullable<int> shopno { get; set; }
+        public string shopno { get; set; }
         public string from_hospital { get; set; }
         public string from_hospital_code { get; set; }
         public string diagnosis { get; set; }
         public Nullable<System.DateTime> closedate { get; set; }
         public string close_reason { get; set; }
         public string remark { get; set; }
+        public int status { get; set; }
     }
 }

@@ -20,11 +20,10 @@ namespace LTCAS.Controllers
             ViewBag.Timestamp = timestamp;
             //writeTokenCookie("james",token);
             //ViewBag.Cookie = token;
-            //ViewBag.Browser = pub.getBrowserInfo(Request.Browser);
+            ViewBag.Browser = pub.getBrowserInfo(Request.Browser);
             //ViewBag.Browser = Request.UserAgent;
-            //ViewBag.Browser = pub.getOSName(Request.UserAgent);
+            ViewBag.userOS = pub.getOSName(Request.UserAgent);
             //ViewBag.Browser = Request.UserHostAddress;
-            //ViewBag.Browser = "passwrd:1234<br/>MD5 hash:"+pub.mixwithMD5("1234");
             //確認登入
             if (Request.Cookies["logintoken"] != null)
             {
@@ -33,16 +32,21 @@ namespace LTCAS.Controllers
                 {
                     //仍在時效內則繼續進行
                     ltc_dbEntities db = new ltc_dbEntities();
-                    string userid = Request.Cookies["userid"].Value;
-                    login_users user = db.login_users.Where(m => m.userid == userid).FirstOrDefault();
+                    int usersn = int.Parse(Request.Cookies["usersn"].Value.ToString());
+                    login_users user = db.login_users.Where(m => m.sn == usersn).FirstOrDefault();
                     LoginInfo login = new LoginInfo();
                     login.userid = user.userid;
                     login.userrole = user.userrole;
                     login.getRoleName();
+                    //
+                    string ip = Request.UserHostAddress;
+                    HttpBrowserCapabilitiesBase browser = Request.Browser;
+                    string userAgent = Request.UserAgent;
                     ViewBag.Message = "Name:" + user.username + "<br />"
                         + "Shop No:" + user.shopno + "<br />"
                         + "Role:" + login.rolename + "<br />"
-                        + "Login Time:" + pub.decodeTimestampToken(Request.Cookies["logintoken"].Value.ToString());
+                        + "Login Time:" + pub.decodeTimestampToken(Request.Cookies["logintoken"].Value.ToString()) + "<br />";
+                    //
                 }
                 else
                 {
@@ -69,13 +73,7 @@ namespace LTCAS.Controllers
             if (userid.Length > 0 & password.Length > 0)
             {
                 string ret = pub.checkLogin(userid, password);
-                if (ret.Length == 0)
-                {
-                    //登入成功寫入COOKIE
-                    writeTokenCookie(userid, pub.generateTimestampToken());
-                    return RedirectToAction("Index");
-                }
-                else
+                if (ret.Equals("userid") || ret.Equals("password"))
                 {
                     switch (ret)
                     {
@@ -86,9 +84,21 @@ namespace LTCAS.Controllers
                             ViewBag.Message = "密碼錯誤！";
                             break;
                         default:
-                            ViewBag.Message = "發生未知的錯誤！";
+                            ViewBag.Message = "unknow error！";
                             break;
                     }
+                }
+                else
+                {
+                    //登入成功寫入COOKIE
+                    writeTokenCookie(ret, pub.generateTimestampToken());
+                    //紀錄
+                    string ip = Request.ServerVariables.Get("Remote_Addr").ToString(); //Request.UserHostAddress;//ip address
+                    string browser = Request.Browser.Browser + Request.Browser.Version;//browser
+                    string userAgent = pub.getOSName(Request.UserAgent);//OS
+                    string remark = "IP:" + ip + ";Browser:" + browser + ";OS:" + userAgent;
+                    pub.actionRecord(int.Parse(ret), "login", remark);
+                    return RedirectToAction("Index");
                 }
             }
             return View();
@@ -161,11 +171,11 @@ namespace LTCAS.Controllers
         }
 
         #region R/W Token to cookie
-        private void writeTokenCookie(string userid, string token)
+        private void writeTokenCookie(string usersn, string token)
         {
-            System.Web.HttpCookie cookieUser = new System.Web.HttpCookie("userid");
+            System.Web.HttpCookie cookieUser = new System.Web.HttpCookie("usersn");
             System.Web.HttpCookie cookieToken = new System.Web.HttpCookie("logintoken");
-            cookieUser.Value = userid;
+            cookieUser.Value = usersn;
             cookieToken.Value = token;
             Response.Cookies.Add(cookieUser);
             Response.Cookies.Add(cookieToken);
@@ -183,7 +193,7 @@ namespace LTCAS.Controllers
         }
         private string readUserIDCookie()
         {
-            System.Web.HttpCookie cookie = Request.Cookies["userid"];
+            System.Web.HttpCookie cookie = Request.Cookies["usersn"];
             if (cookie != null)
                 return cookie.Value;
             else

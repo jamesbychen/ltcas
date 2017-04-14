@@ -21,5 +21,6 @@ namespace LTCAS.Models
         public string address { get; set; }
         public string telephone { get; set; }
         public string cellphone { get; set; }
+        public int status { get; set; }
     }
 }

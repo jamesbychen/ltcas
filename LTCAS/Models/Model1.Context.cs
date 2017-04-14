@@ -25,10 +25,10 @@ namespace LTCAS.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<login_record> login_record { get; set; }
         public virtual DbSet<login_users> login_users { get; set; }
         public virtual DbSet<user_roles> user_roles { get; set; }
         public virtual DbSet<patient_basic_info> patient_basic_info { get; set; }
         public virtual DbSet<patient_contacts> patient_contacts { get; set; }
+        public virtual DbSet<login_record> login_record { get; set; }
     }
 }

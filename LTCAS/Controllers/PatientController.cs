@@ -12,7 +12,8 @@ namespace LTCAS.Controllers
         // GET: Patient 住民管理
         public ActionResult Index()
         {
-            return PartialView("_search");
+
+            return PartialView();
         }
 
         //input form
@@ -29,8 +30,11 @@ namespace LTCAS.Controllers
         [HttpPost]
         public ActionResult saveBasic(FormCollection form)
         {
+            //將userid傳入
+            System.Web.HttpCookie user = Request.Cookies["usersn"];
+            form.Add("usersn",user.Value);
             string result = "0";
-            //result= pub.insertPatientBasicInfo(form);
+            result= pub.insertPatientBasicInfo(form);
             if (result.Equals("0"))
             {
                 Session.Add("result", "Add Failed!! Error:"+result);

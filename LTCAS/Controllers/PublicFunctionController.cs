@@ -17,8 +17,8 @@ namespace LTCAS.Controllers
         private ltc_dbEntities db = new ltc_dbEntities();
         private string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["Elmah.Sql"].ConnectionString;
         private SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Elmah.Sql"].ConnectionString);
-        private SqlCommand cmd=new SqlCommand();
-        private SqlDataAdapter da=new SqlDataAdapter();
+        private SqlCommand cmd = new SqlCommand();
+        private SqlDataAdapter da = new SqlDataAdapter();
         private SqlDataReader dr;
         //產生時間戳記的TOKEN
         public string generateTimestampToken()
@@ -70,7 +70,12 @@ namespace LTCAS.Controllers
             {
                 if (!mixwithMD5(password).Equals(lu.password))
                 {
-                    returnMsg = "password";//Wrong password
+                    returnMsg = "password";//密碼錯誤
+                }
+                else
+                {
+                    returnMsg = lu.sn.ToString();//密碼正確則傳回SN
+
                 }
             }
             return returnMsg;
@@ -114,8 +119,10 @@ namespace LTCAS.Controllers
                 lu.userrole = int.Parse(userrole);
                 lu.usermail = useremail;
                 lu.password = password;
+                lu.status = 1;
                 db.login_users.Add(lu);
                 db.SaveChanges();
+                //
                 return "Add User-" + username + "Success!";
             }
         }
@@ -199,10 +206,10 @@ namespace LTCAS.Controllers
         }
 
         //Action history record
-        public void actionRecord(string userid, string action, string remark)
+        public void actionRecord(int usersn, string action, string remark)
         {
             login_record rec = new login_record();
-            rec.userid = userid;
+            rec.usersn = usersn;
             rec.recaction = action;
             rec.rectime = DateTime.Now;
             rec.remark = remark;
@@ -229,7 +236,7 @@ namespace LTCAS.Controllers
             cmd.Parameters.Add("@begin_date", SqlDbType.DateTime).Value = DateTime.Now;// form["beginDate"];
             cmd.Parameters.Add("@address", SqlDbType.NVarChar, 500).Value = form["address"].ToString();
             cmd.Parameters.Add("@telephone", SqlDbType.VarChar, 20).Value = form["telephone"].ToString();
-            cmd.Parameters.Add("@shopno", SqlDbType.NVarChar,10).Value = "1111";//暫時固定，shopno應該抓user的屬性
+            cmd.Parameters.Add("@shopno", SqlDbType.NVarChar, 10).Value = "1111";//暫時固定，shopno應該抓user的屬性
             cmd.Parameters.Add("@from_hospital", SqlDbType.NVarChar, 50).Value = form["fromHospital"].ToString();
             cmd.Parameters.Add("@from_hospital_code", SqlDbType.NVarChar, 10).Value = form["fromHospitalCode"].ToString();
             cmd.Parameters.Add("@diagnosis", SqlDbType.NVarChar, 1000).Value = form["diagnosis"].ToString();
@@ -243,6 +250,8 @@ namespace LTCAS.Controllers
             cmd.Parameters.Add("@contact_address", SqlDbType.NVarChar, 500).Value = form["contact_address"].ToString();
             cmd.Parameters.Add("@contact_telephone", SqlDbType.NVarChar, 20).Value = form["contact_telephone"].ToString();
             cmd.Parameters.Add("@contact_cellphone", SqlDbType.NVarChar, 20).Value = form["contact_cellphone"].ToString();
+            //user ID
+            cmd.Parameters.Add("@actionuser", SqlDbType.Int).Value = int.Parse(form["usersn"].ToString());
             //回傳值：
             cmd.Parameters.Add("@result", SqlDbType.Int);
             cmd.Parameters["@result"].Direction = ParameterDirection.Output;
@@ -255,6 +264,15 @@ namespace LTCAS.Controllers
             //
 
             return result;
+        }
+
+        //住民資料（清單）
+        public List<patient_basic_info> getPatientList(string keyword)
+        {
+            List<patient_basic_info> list = new List<patient_basic_info>();
+            ltc_dbEntities db = new ltc_dbEntities();
+            list = db.patient_basic_info.Where(m => m.lastname == keyword).ToList();
+            return list;
         }
     }
     public class LoginInfo

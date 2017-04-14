@@ -5,8 +5,8 @@
       <PropertyRef Name="sn" />
     </Key>
     <Property Name="sn" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="userid" Type="varchar" MaxLength="20" />
-    <Property Name="rectime" Type="datetime" />
+    <Property Name="usersn" Type="int" Nullable="false" />
+    <Property Name="rectime" Type="datetime" Nullable="false" />
     <Property Name="recaction" Type="varchar" MaxLength="50" />
     <Property Name="remark" Type="nvarchar" MaxLength="50" />
   </EntityType>
@@ -21,6 +21,7 @@
     <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="password" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="usermail" Type="varchar" MaxLength="50" />
+    <Property Name="status" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="patient_basic_info">
     <Key>
@@ -36,13 +37,14 @@
     <Property Name="begindate" Type="datetime" />
     <Property Name="address" Type="nvarchar(max)" />
     <Property Name="telephone" Type="varchar" MaxLength="20" />
-    <Property Name="shopno" Type="int" />
+    <Property Name="shopno" Type="nvarchar" MaxLength="10" />
     <Property Name="from_hospital" Type="nvarchar" MaxLength="50" />
     <Property Name="from_hospital_code" Type="varchar" MaxLength="10" />
     <Property Name="diagnosis" Type="nvarchar(max)" />
     <Property Name="closedate" Type="datetime" />
     <Property Name="close_reason" Type="nvarchar(max)" />
     <Property Name="remark" Type="nvarchar(max)" />
+    <Property Name="status" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="patient_contacts">
     <Key>
@@ -55,6 +57,7 @@
     <Property Name="address" Type="nvarchar" MaxLength="500" />
     <Property Name="telephone" Type="varchar" MaxLength="20" />
     <Property Name="cellphone" Type="varchar" MaxLength="20" />
+    <Property Name="status" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="user_roles">
     <Key>

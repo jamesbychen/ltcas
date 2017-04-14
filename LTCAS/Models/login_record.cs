@@ -15,8 +15,8 @@ namespace LTCAS.Models
     public partial class login_record
     {
         public int sn { get; set; }
-        public string userid { get; set; }
-        public Nullable<System.DateTime> rectime { get; set; }
+        public int usersn { get; set; }
+        public System.DateTime rectime { get; set; }
         public string recaction { get; set; }
         public string remark { get; set; }
     }

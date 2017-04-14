@@ -1,22 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="ltc_dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="ltc_dbEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="login_record" EntityType="ltc_dbModel.login_record" />
     <EntitySet Name="login_users" EntityType="ltc_dbModel.login_users" />
     <EntitySet Name="user_roles" EntityType="ltc_dbModel.user_roles" />
     <EntitySet Name="patient_basic_info" EntityType="ltc_dbModel.patient_basic_info" />
     <EntitySet Name="patient_contacts" EntityType="ltc_dbModel.patient_contacts" />
+    <EntitySet Name="login_record" EntityType="ltc_dbModel.login_record" />
   </EntityContainer>
-  <EntityType Name="login_record">
-    <Key>
-      <PropertyRef Name="sn" />
-    </Key>
-    <Property Name="sn" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="userid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="rectime" Type="DateTime" Precision="3" />
-    <Property Name="recaction" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="remark" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-  </EntityType>
   <EntityType Name="login_users">
     <Key>
       <PropertyRef Name="sn" />
@@ -28,6 +18,7 @@
     <Property Name="username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="usermail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="status" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="user_roles">
     <Key>
@@ -51,13 +42,14 @@
     <Property Name="begindate" Type="DateTime" Precision="3" />
     <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="telephone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="shopno" Type="Int32" />
+    <Property Name="shopno" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
     <Property Name="from_hospital" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="from_hospital_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
     <Property Name="diagnosis" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="closedate" Type="DateTime" Precision="3" />
     <Property Name="close_reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="status" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="patient_contacts">
     <Key>
@@ -70,5 +62,16 @@
     <Property Name="address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="telephone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
     <Property Name="cellphone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="status" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="login_record">
+    <Key>
+      <PropertyRef Name="sn" />
+    </Key>
+    <Property Name="sn" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="usersn" Type="Int32" Nullable="false" />
+    <Property Name="rectime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="recaction" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="remark" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
 </Schema>
