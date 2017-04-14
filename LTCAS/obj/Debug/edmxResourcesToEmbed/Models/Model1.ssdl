@@ -1,21 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="ltc_dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="ELMAH_Error">
-    <Key>
-      <PropertyRef Name="ErrorId" />
-    </Key>
-    <Property Name="ErrorId" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="Application" Type="nvarchar" MaxLength="60" Nullable="false" />
-    <Property Name="Host" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="Type" Type="nvarchar" MaxLength="100" Nullable="false" />
-    <Property Name="Source" Type="nvarchar" MaxLength="60" Nullable="false" />
-    <Property Name="Message" Type="nvarchar" MaxLength="500" Nullable="false" />
-    <Property Name="User" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="StatusCode" Type="int" Nullable="false" />
-    <Property Name="TimeUtc" Type="datetime" Nullable="false" />
-    <Property Name="Sequence" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="AllXml" Type="nvarchar(max)" Nullable="false" />
-  </EntityType>
   <EntityType Name="login_record">
     <Key>
       <PropertyRef Name="sn" />
@@ -38,6 +22,40 @@
     <Property Name="password" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="usermail" Type="varchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="patient_basic_info">
+    <Key>
+      <PropertyRef Name="sn" />
+    </Key>
+    <Property Name="sn" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="firstname" Type="nvarchar" MaxLength="10" />
+    <Property Name="lastname" Type="nvarchar" MaxLength="20" />
+    <Property Name="socialID" Type="varchar" MaxLength="10" />
+    <Property Name="sex" Type="char" MaxLength="1" />
+    <Property Name="birthday" Type="varchar" MaxLength="10" />
+    <Property Name="createdate" Type="datetime" />
+    <Property Name="begindate" Type="datetime" />
+    <Property Name="address" Type="nvarchar(max)" />
+    <Property Name="telephone" Type="varchar" MaxLength="20" />
+    <Property Name="shopno" Type="int" />
+    <Property Name="from_hospital" Type="nvarchar" MaxLength="50" />
+    <Property Name="from_hospital_code" Type="varchar" MaxLength="10" />
+    <Property Name="diagnosis" Type="nvarchar(max)" />
+    <Property Name="closedate" Type="datetime" />
+    <Property Name="close_reason" Type="nvarchar(max)" />
+    <Property Name="remark" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="patient_contacts">
+    <Key>
+      <PropertyRef Name="sn" />
+    </Key>
+    <Property Name="sn" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="patient_sn" Type="int" Nullable="false" />
+    <Property Name="contacts" Type="nvarchar" MaxLength="50" />
+    <Property Name="relationship" Type="nvarchar" MaxLength="10" />
+    <Property Name="address" Type="nvarchar" MaxLength="500" />
+    <Property Name="telephone" Type="varchar" MaxLength="20" />
+    <Property Name="cellphone" Type="varchar" MaxLength="20" />
+  </EntityType>
   <EntityType Name="user_roles">
     <Key>
       <PropertyRef Name="sn" />
@@ -47,9 +65,10 @@
     <Property Name="remark" Type="nvarchar" MaxLength="200" />
   </EntityType>
   <EntityContainer Name="ltc_dbModelStoreContainer">
-    <EntitySet Name="ELMAH_Error" EntityType="Self.ELMAH_Error" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="login_record" EntityType="Self.login_record" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="login_users" EntityType="Self.login_users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="patient_basic_info" EntityType="Self.patient_basic_info" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="patient_contacts" EntityType="Self.patient_contacts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="user_roles" EntityType="Self.user_roles" Schema="dbo" store:Type="Tables" />
   </EntityContainer>
 </Schema>

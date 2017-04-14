@@ -306,9 +306,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\ELMAH_Error.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\login_record.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -330,10 +327,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\patient_basic_info.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\patient_contacts.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\user_roles.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\PatientBasicInfoViewModel.cs" />
     <Compile Include="WebApi\loginuserController.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -395,18 +399,25 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Properties\PublishProfiles\wwwroot.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\additional-methods.js" />
+    <Content Include="Scripts\additional-methods.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\custom\jquery.validate.addmore.taiwan.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\custom\messages_zh_TW.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -435,21 +446,18 @@
     <Content Include="Views\Home\UserLogin.cshtml" />
     <Content Include="Views\Home\AddLoginUser.cshtml" />
     <Content Include="Views\Home\logout.cshtml" />
-    <Content Include="Views\Shared\_nurse.cshtml" />
-    <Content Include="Views\Shared\_SocialWorker.cshtml" />
-    <Content Include="Views\Shared\_doctor.cshtml" />
-    <Content Include="Views\Shared\_pharmacist.cshtml" />
-    <Content Include="Views\Shared\_nutritionist.cshtml" />
-    <Content Include="Views\Shared\_manager.cshtml" />
+    <Content Include="Views\Shared\staff.cshtml" />
+    <Content Include="Views\Home\Doctors.cshtml" />
+    <Content Include="Views\Patient\_search.cshtml" />
+    <Content Include="Views\Diagnosis\Index.cshtml" />
+    <Content Include="Views\Medication\Index.cshtml" />
+    <Content Include="Views\Patient\addBasic.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Account\" />
-    <Folder Include="Views\Diagnosis\" />
     <Folder Include="Views\Health\" />
     <Folder Include="Views\Manage\" />
-    <Folder Include="Views\Medication\" />
     <Folder Include="Views\Nursing\" />
-    <Folder Include="Views\Patient\" />
     <Folder Include="Views\PublicFunction\" />
   </ItemGroup>
   <ItemGroup>

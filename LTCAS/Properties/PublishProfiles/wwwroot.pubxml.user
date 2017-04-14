@@ -100,7 +100,7 @@
       <publishTime>10/05/2014 11:26:36</publishTime>
     </File>
     <File Include="bin/LTCAS.dll">
-      <publishTime>04/07/2017 17:31:12</publishTime>
+      <publishTime>04/14/2017 12:05:57</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>03/21/2017 09:33:54</publishTime>
@@ -475,19 +475,31 @@
       <publishTime>03/21/2017 09:33:53</publishTime>
     </File>
     <File Include="Models/Model1.edmx.diagram">
-      <publishTime>03/30/2017 15:20:39</publishTime>
+      <publishTime>04/10/2017 17:29:34</publishTime>
     </File>
     <File Include="MvcElmahDashboard_Readme.html">
       <publishTime>03/21/2017 09:33:53</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>03/24/2017 11:52:48</publishTime>
+      <publishTime>04/10/2017 16:11:50</publishTime>
+    </File>
+    <File Include="Scripts/additional-methods.js">
+      <publishTime>12/02/2016 10:50:18</publishTime>
+    </File>
+    <File Include="Scripts/additional-methods.min.js">
+      <publishTime>12/02/2016 10:50:38</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
       <publishTime>11/12/2014 09:03:24</publishTime>
     </File>
     <File Include="Scripts/bootstrap.min.js">
       <publishTime>11/12/2014 09:03:24</publishTime>
+    </File>
+    <File Include="Scripts/custom/jquery.validate.addmore.taiwan.js">
+      <publishTime>04/14/2017 09:31:30</publishTime>
+    </File>
+    <File Include="Scripts/custom/messages_zh_TW.js">
+      <publishTime>12/02/2016 10:48:50</publishTime>
     </File>
     <File Include="Scripts/jquery-3.1.1.js">
       <publishTime>03/21/2017 09:33:53</publishTime>
@@ -507,6 +519,12 @@
     <File Include="Scripts/jquery-3.1.1.slim.min.map">
       <publishTime>03/21/2017 09:33:53</publishTime>
     </File>
+    <File Include="Scripts/jquery.unobtrusive-ajax.js">
+      <publishTime>04/10/2017 16:11:50</publishTime>
+    </File>
+    <File Include="Scripts/jquery.unobtrusive-ajax.min.js">
+      <publishTime>04/10/2017 16:11:49</publishTime>
+    </File>
     <File Include="Scripts/jquery.validate.js">
       <publishTime>03/21/2017 09:33:53</publishTime>
     </File>
@@ -522,6 +540,9 @@
     <File Include="Scripts/modernizr-2.8.3.js">
       <publishTime>03/21/2017 09:33:53</publishTime>
     </File>
+    <File Include="Scripts/npm.js">
+      <publishTime>11/12/2014 09:03:24</publishTime>
+    </File>
     <File Include="Scripts/respond.js">
       <publishTime>03/21/2017 09:33:53</publishTime>
     </File>
@@ -535,7 +556,10 @@
       <publishTime>03/21/2017 09:33:53</publishTime>
     </File>
     <File Include="Scripts/_references.js">
-      <publishTime>03/21/2017 09:33:53</publishTime>
+      <publishTime>04/14/2017 08:40:40</publishTime>
+    </File>
+    <File Include="Views/Diagnosis/Index.cshtml">
+      <publishTime>04/10/2017 16:13:41</publishTime>
     </File>
     <File Include="Views/Error/GenericError.cshtml">
       <publishTime>03/22/2017 10:28:57</publishTime>
@@ -552,11 +576,14 @@
     <File Include="Views/Home/AddLoginUser.cshtml">
       <publishTime>04/06/2017 13:49:49</publishTime>
     </File>
+    <File Include="Views/Home/Doctors.cshtml">
+      <publishTime>04/10/2017 15:49:40</publishTime>
+    </File>
     <File Include="Views/Home/EditLoginUser.cshtml">
       <publishTime>03/21/2017 16:02:53</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>04/07/2017 13:57:43</publishTime>
+      <publishTime>04/11/2017 09:06:03</publishTime>
     </File>
     <File Include="Views/Home/logout.cshtml">
       <publishTime>04/06/2017 17:26:52</publishTime>
@@ -570,8 +597,23 @@
     <File Include="Views/Home/UserLogin.cshtml">
       <publishTime>04/05/2017 11:45:29</publishTime>
     </File>
+    <File Include="Views/Medication/Index.cshtml">
+      <publishTime>04/10/2017 16:40:24</publishTime>
+    </File>
+    <File Include="Views/Patient/addBasic.cshtml">
+      <publishTime>04/14/2017 11:33:14</publishTime>
+    </File>
+    <File Include="Views/Patient/inputBasic.cshtml">
+      <publishTime>04/11/2017 09:34:43</publishTime>
+    </File>
+    <File Include="Views/Patient/_search.cshtml">
+      <publishTime>04/10/2017 15:45:24</publishTime>
+    </File>
+    <File Include="Views/Shared/staff.cshtml">
+      <publishTime>04/14/2017 09:22:08</publishTime>
+    </File>
     <File Include="Views/Shared/_doctor.cshtml">
-      <publishTime>04/07/2017 16:55:26</publishTime>
+      <publishTime>04/10/2017 09:25:30</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
       <publishTime>03/21/2017 09:33:53</publishTime>
@@ -598,7 +640,7 @@
       <publishTime>03/21/2017 09:33:53</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/07/2017 11:02:16</publishTime>
+      <publishTime>04/11/2017 09:35:23</publishTime>
     </File>
   </ItemGroup>
 </Project>

@@ -7,12 +7,19 @@ using LTCAS.Models;
 using System.Data.Entity;
 using System.Security.Cryptography;
 using System.Text;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace LTCAS.Controllers
 {
     public class PublicFunctionController : Controller
     {
         private ltc_dbEntities db = new ltc_dbEntities();
+        private string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["Elmah.Sql"].ConnectionString;
+        private SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Elmah.Sql"].ConnectionString);
+        private SqlCommand cmd=new SqlCommand();
+        private SqlDataAdapter da=new SqlDataAdapter();
+        private SqlDataReader dr;
         //產生時間戳記的TOKEN
         public string generateTimestampToken()
         {
@@ -40,9 +47,9 @@ namespace LTCAS.Controllers
         {
             bool overtime = true;
             int limit = 120;//預設為2hr(120min)
-                DateTime tokenTime = decodeTimestampToken(token);
+            DateTime tokenTime = decodeTimestampToken(token);
             TimeSpan period = DateTime.Now - tokenTime;
-            if (period.Minutes > limit)
+            if (period.TotalMinutes > limit)
                 overtime = true;//逾時成立
             else
                 overtime = false;//尚在時限內
@@ -202,6 +209,53 @@ namespace LTCAS.Controllers
             db.login_record.Add(rec);
             db.SaveChanges();
         }
+
+        //將Dictionary轉成JSON字串輸出
+        public string Output2Json(Dictionary<string, string> list)
+        {
+            return new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(list);
+        }
+
+        //新增住民資料（首次）
+        public string insertPatientBasicInfo(FormCollection form)
+        {
+            cmd.CommandText = "usp_insertPatientBasicInfo";
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.Add("@firstname", SqlDbType.NVarChar, 10).Value = form["firstname"].ToString();
+            cmd.Parameters.Add("@lastname", SqlDbType.NVarChar, 20).Value = form["lastname"].ToString();
+            cmd.Parameters.Add("@socialID", SqlDbType.NVarChar, 10).Value = form["socialID"].ToString();
+            cmd.Parameters.Add("@birthday", SqlDbType.NVarChar, 10).Value = form["birthday"].ToString();
+            cmd.Parameters.Add("@sex", SqlDbType.Char, 1).Value = form["sex"].ToString();
+            cmd.Parameters.Add("@begin_date", SqlDbType.DateTime).Value = DateTime.Now;// form["beginDate"];
+            cmd.Parameters.Add("@address", SqlDbType.NVarChar, 500).Value = form["address"].ToString();
+            cmd.Parameters.Add("@telephone", SqlDbType.VarChar, 20).Value = form["telephone"].ToString();
+            cmd.Parameters.Add("@shopno", SqlDbType.NVarChar,10).Value = "1111";//暫時固定，shopno應該抓user的屬性
+            cmd.Parameters.Add("@from_hospital", SqlDbType.NVarChar, 50).Value = form["fromHospital"].ToString();
+            cmd.Parameters.Add("@from_hospital_code", SqlDbType.NVarChar, 10).Value = form["fromHospitalCode"].ToString();
+            cmd.Parameters.Add("@diagnosis", SqlDbType.NVarChar, 1000).Value = form["diagnosis"].ToString();
+            //首次不需輸入結案資訊
+            cmd.Parameters.Add("@close_date", SqlDbType.DateTime).Value = DateTime.Parse("1900-01-01");// form["closeDate"];
+            cmd.Parameters.Add("@close_reason", SqlDbType.NVarChar, 1000).Value = "";// form["closeReason"].ToString();
+            //
+            cmd.Parameters.Add("@remark", SqlDbType.NVarChar, 1000).Value = "";//備註欄位，暫時取消
+            cmd.Parameters.Add("@contacts", SqlDbType.NVarChar, 50).Value = form["contacts"].ToString();
+            cmd.Parameters.Add("@contact_relationship", SqlDbType.NVarChar, 10).Value = form["contact_relationship"].ToString();
+            cmd.Parameters.Add("@contact_address", SqlDbType.NVarChar, 500).Value = form["contact_address"].ToString();
+            cmd.Parameters.Add("@contact_telephone", SqlDbType.NVarChar, 20).Value = form["contact_telephone"].ToString();
+            cmd.Parameters.Add("@contact_cellphone", SqlDbType.NVarChar, 20).Value = form["contact_cellphone"].ToString();
+            //回傳值：
+            cmd.Parameters.Add("@result", SqlDbType.Int);
+            cmd.Parameters["@result"].Direction = ParameterDirection.Output;
+            cmd.Connection = conn;
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            //回傳值：
+            string result = cmd.Parameters["@result"].Value.ToString();
+            //
+
+            return result;
+        }
     }
     public class LoginInfo
     {
@@ -214,7 +268,7 @@ namespace LTCAS.Controllers
         public string rolename { get; set; }
         public void getRoleName()
         {
-            rolename=db.user_roles.Where(m => m.sn == userrole).FirstOrDefault().name.ToString();
+            rolename = db.user_roles.Where(m => m.sn == userrole).FirstOrDefault().name.ToString();
         }
 
     }

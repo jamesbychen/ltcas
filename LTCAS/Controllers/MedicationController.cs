@@ -11,7 +11,7 @@ namespace LTCAS.Controllers
         // GET: Medication  用藥記錄
         public ActionResult Index()
         {
-            return View();
+            return PartialView();
         }
     }
 }

@@ -1,23 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="ltc_dbModelStoreContainer" CdmEntityContainer="ltc_dbEntities">
-    <EntitySetMapping Name="ELMAH_Error">
-      <EntityTypeMapping TypeName="ltc_dbModel.ELMAH_Error">
-        <MappingFragment StoreEntitySet="ELMAH_Error">
-          <ScalarProperty Name="AllXml" ColumnName="AllXml" />
-          <ScalarProperty Name="Sequence" ColumnName="Sequence" />
-          <ScalarProperty Name="TimeUtc" ColumnName="TimeUtc" />
-          <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
-          <ScalarProperty Name="User" ColumnName="User" />
-          <ScalarProperty Name="Message" ColumnName="Message" />
-          <ScalarProperty Name="Source" ColumnName="Source" />
-          <ScalarProperty Name="Type" ColumnName="Type" />
-          <ScalarProperty Name="Host" ColumnName="Host" />
-          <ScalarProperty Name="Application" ColumnName="Application" />
-          <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="login_record">
       <EntityTypeMapping TypeName="ltc_dbModel.login_record">
         <MappingFragment StoreEntitySet="login_record">
@@ -47,6 +30,42 @@
         <MappingFragment StoreEntitySet="user_roles">
           <ScalarProperty Name="remark" ColumnName="remark" />
           <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="sn" ColumnName="sn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="patient_basic_info">
+      <EntityTypeMapping TypeName="ltc_dbModel.patient_basic_info">
+        <MappingFragment StoreEntitySet="patient_basic_info">
+          <ScalarProperty Name="remark" ColumnName="remark" />
+          <ScalarProperty Name="close_reason" ColumnName="close_reason" />
+          <ScalarProperty Name="closedate" ColumnName="closedate" />
+          <ScalarProperty Name="diagnosis" ColumnName="diagnosis" />
+          <ScalarProperty Name="from_hospital_code" ColumnName="from_hospital_code" />
+          <ScalarProperty Name="from_hospital" ColumnName="from_hospital" />
+          <ScalarProperty Name="shopno" ColumnName="shopno" />
+          <ScalarProperty Name="telephone" ColumnName="telephone" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="begindate" ColumnName="begindate" />
+          <ScalarProperty Name="createdate" ColumnName="createdate" />
+          <ScalarProperty Name="birthday" ColumnName="birthday" />
+          <ScalarProperty Name="sex" ColumnName="sex" />
+          <ScalarProperty Name="socialID" ColumnName="socialID" />
+          <ScalarProperty Name="lastname" ColumnName="lastname" />
+          <ScalarProperty Name="firstname" ColumnName="firstname" />
+          <ScalarProperty Name="sn" ColumnName="sn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="patient_contacts">
+      <EntityTypeMapping TypeName="ltc_dbModel.patient_contacts">
+        <MappingFragment StoreEntitySet="patient_contacts">
+          <ScalarProperty Name="cellphone" ColumnName="cellphone" />
+          <ScalarProperty Name="telephone" ColumnName="telephone" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="relationship" ColumnName="relationship" />
+          <ScalarProperty Name="contacts" ColumnName="contacts" />
+          <ScalarProperty Name="patient_sn" ColumnName="patient_sn" />
           <ScalarProperty Name="sn" ColumnName="sn" />
         </MappingFragment>
       </EntityTypeMapping>

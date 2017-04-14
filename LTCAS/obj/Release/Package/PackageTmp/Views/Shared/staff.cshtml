@@ -1,0 +1,70 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/Content/css")
+    <script src="~/Scripts/jquery.validate.js" type="text/javascript"></script>
+    <script src="~/Scripts/additional-methods.js" type="text/javascript"></script>
+    <script src="~/Scripts/custom/messages_zh_TW.js" type="text/javascript"></script>
+    <script src="~/Scripts/custom/jquery.validate.addmore.taiwan.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js" type="text/javascript"></script>
+    <script>
+
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display
+                <div class="navbar-header">
+
+                    <a class="navbar-brand" href="#">Brand</a>
+                </div>
+                    -->
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>@Ajax.ActionLink("住民管理", "../Patient/addBasic", new AjaxOptions { UpdateTargetId = "rendercontent", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" })</li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">定期照護紀錄<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">生理數值紀錄</a></li>
+                                <li><a href="#">傷病護理紀錄</a></li>
+                                <li><a href="#">管路更換紀錄</a></li>
+                                <!--<li role="separator" class="divider"></li>-->
+                                <li><a href="#">疼痛處置</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">評估表單<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">72小時入住評估單</a></li>
+                                <li><a href="#">巴氏量表</a></li>
+                                <li><a href="#">簡易心智量表</a></li>
+                                <li><a href="#">老人憂鬱量表</a></li>
+                            </ul>
+                        </li>
+                        <li>@Ajax.ActionLink("診斷紀錄", "../Diagnosis", new AjaxOptions { UpdateTargetId = "rendercontent", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" })</li>
+                        <li>@Ajax.ActionLink("用藥紀錄","../Medication", new AjaxOptions { UpdateTargetId = "rendercontent", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" })</li>
+                        <li><a href="#">統計報表</a></li>
+                    </ul>
+
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+
+
+        <div id="rendercontent" class="container body-content">
+            @RenderBody()
+        </div>
+    </div>
+</body>
+</html>

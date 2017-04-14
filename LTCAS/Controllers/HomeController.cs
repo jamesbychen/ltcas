@@ -29,7 +29,7 @@ namespace LTCAS.Controllers
             if (Request.Cookies["logintoken"] != null)
             {
                 //檢查逾時
-                if(!pub.isTokenOver(Request.Cookies["logintoken"].Value.ToString()))
+                if (!pub.isTokenOver(Request.Cookies["logintoken"].Value.ToString()))
                 {
                     //仍在時效內則繼續進行
                     ltc_dbEntities db = new ltc_dbEntities();
@@ -44,12 +44,16 @@ namespace LTCAS.Controllers
                         + "Role:" + login.rolename + "<br />"
                         + "Login Time:" + pub.decodeTimestampToken(Request.Cookies["logintoken"].Value.ToString());
                 }
+                else
+                {
+                    return RedirectToAction("UserLogin");
+                }
             }
             else
             {
-                ViewBag.Message = "Redirect";
                 return RedirectToAction("UserLogin");
             }
+
             return View();
         }
 
@@ -122,6 +126,16 @@ namespace LTCAS.Controllers
             return View();
         }
 
+        //Doctor Page
+        public ActionResult Doctors()
+        {
+            if (Session["result"] != null)
+            {
+                ViewBag.Message = Session["result"].ToString();
+
+            }
+            return View();
+        }
 
 
         //手動新增帳號
@@ -141,13 +155,13 @@ namespace LTCAS.Controllers
         {
             //ViewBag.userrole = au.userrole;
             au.userrole = pub.getRoleList2();
-            ViewBag.message = pub.addLoginUser(au.userid, au.shopno, au.username,au.selectRole, au.usermail, pub.mixwithMD5(au.password));
+            ViewBag.message = pub.addLoginUser(au.userid, au.shopno, au.username, au.selectRole, au.usermail, pub.mixwithMD5(au.password));
 
             return View(au);
         }
 
         #region R/W Token to cookie
-        private void writeTokenCookie(string userid,string token)
+        private void writeTokenCookie(string userid, string token)
         {
             System.Web.HttpCookie cookieUser = new System.Web.HttpCookie("userid");
             System.Web.HttpCookie cookieToken = new System.Web.HttpCookie("logintoken");
@@ -167,7 +181,8 @@ namespace LTCAS.Controllers
                 return "";
             }
         }
-        private string readUserIDCookie() {
+        private string readUserIDCookie()
+        {
             System.Web.HttpCookie cookie = Request.Cookies["userid"];
             if (cookie != null)
                 return cookie.Value;
@@ -180,7 +195,7 @@ namespace LTCAS.Controllers
         private void clearCookie()
         {
             //只是將cookie設定逾時
-            if(Request.Cookies["userid"]!=null)
+            if (Request.Cookies["userid"] != null)
             {
                 Request.Cookies["userid"].Expires = DateTime.Now.AddDays(-1d);
             }
@@ -194,39 +209,20 @@ namespace LTCAS.Controllers
         #region TEST
         public ActionResult testConnection()
         {
-            string connStr = @"Data Source=JAMES-PC\SQLEXPRESS;Initial Catalog=ltc_db;User Id=ltc01;Password=1234;Integrated Security=True";
+            string connStr = "Data Source=192.168.0.49;Initial Catalog=inter_hfamily;User Id=hfamily_user;Password=hfamily_user;";
             connStr = System.Configuration.ConfigurationManager.ConnectionStrings["Elmah.Sql"].ConnectionString;
             ViewBag.connstr = connStr;
-            string cmdStr = "select ErrorId from ELMAH_Error";
-            string cmdStr2 = @"INSERT INTO [dbo].[ELMAH_Error]
-           ([Application]
-           ,[Host]
-           ,[Type]
-           ,[Source]
-           ,[Message]
-           ,[User]
-           ,[StatusCode]
-           ,[TimeUtc]
-           ,[AllXml])
-                 VALUES
-           ('app'
-           ,'host'
-           ,'type'
-           ,'source'
-           ,'message'
-           ,'user'
-           ,500
-           ,getdate()
-           ,'<XML></XML>')";
+            string cmdStr = "select sn from login_record";
+            string cmdStr2 = @"insert into login_record values('aaa',getdate(),'test','test')";
             //create connection
             System.Data.SqlClient.SqlConnection conn = new System.Data.SqlClient.SqlConnection(connStr);
             System.Data.SqlClient.SqlDataAdapter da = new System.Data.SqlClient.SqlDataAdapter(cmdStr, conn);
             da.InsertCommand = new System.Data.SqlClient.SqlCommand();
             da.InsertCommand.CommandText = cmdStr2;
             da.InsertCommand.Connection = conn;
-            //conn.Open();
+            conn.Open();
             da.InsertCommand.ExecuteNonQuery();
-            //conn.Close();
+            conn.Close();
             System.Data.DataTable dt = new System.Data.DataTable();
             da.Fill(dt);
             ViewBag.ErrorID = dt.Rows[0][0].ToString();

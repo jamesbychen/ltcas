@@ -12,18 +12,14 @@ namespace LTCAS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ELMAH_Error
+    public partial class patient_contacts
     {
-        public System.Guid ErrorId { get; set; }
-        public string Application { get; set; }
-        public string Host { get; set; }
-        public string Type { get; set; }
-        public string Source { get; set; }
-        public string Message { get; set; }
-        public string User { get; set; }
-        public int StatusCode { get; set; }
-        public System.DateTime TimeUtc { get; set; }
-        public int Sequence { get; set; }
-        public string AllXml { get; set; }
+        public int sn { get; set; }
+        public int patient_sn { get; set; }
+        public string contacts { get; set; }
+        public string relationship { get; set; }
+        public string address { get; set; }
+        public string telephone { get; set; }
+        public string cellphone { get; set; }
     }
 }

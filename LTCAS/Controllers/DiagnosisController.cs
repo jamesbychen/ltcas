@@ -11,7 +11,8 @@ namespace LTCAS.Controllers
         // GET: Diagnosis   看診記錄
         public ActionResult Index()
         {
-            return View();
+            ViewBag.Message = "看診記錄";
+            return PartialView();
         }
     }
 }
