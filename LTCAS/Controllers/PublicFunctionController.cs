@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Data;
 using System.Data.SqlClient;
+using LTCAS.ViewModels;
 
 namespace LTCAS.Controllers
 {
@@ -267,12 +268,57 @@ namespace LTCAS.Controllers
         }
 
         //住民資料（清單）
-        public List<patient_basic_info> getPatientList(string keyword)
+        public List<PatientBasicInfoViewModel> getPatientList(string keyword = "")
         {
             List<patient_basic_info> list = new List<patient_basic_info>();
+            List<PatientBasicInfoViewModel> patientlist = new List<PatientBasicInfoViewModel>();
             ltc_dbEntities db = new ltc_dbEntities();
-            list = db.patient_basic_info.Where(m => m.lastname == keyword).ToList();
-            return list;
+            list = db.patient_basic_info.Where(m => m.status == 1).ToList();
+            foreach (var p in list)
+            {
+                //basic
+                PatientBasicInfoViewModel pbi = new PatientBasicInfoViewModel();
+                pbi.PatientSn = p.sn;
+                pbi.firstname = p.firstname;
+                pbi.lastname = p.lastname;
+                pbi.socialID = p.socialID;
+                pbi.sex = p.sex;
+                pbi.birthday = p.birthday;
+                pbi.beginDate = p.begindate.GetValueOrDefault(Convert.ToDateTime("1900/1/1")).ToString("yyyy/MM/dd");
+                pbi.shopNo = p.shopno;
+                pbi.fromHospital = p.from_hospital;
+                pbi.closeDate = p.closedate.GetValueOrDefault(Convert.ToDateTime("1900/1/1")).ToString("yyyy/MM/dd");
+                pbi.bindData();
+
+                //contact
+                List<ViewModels.PatientContactsViewModel> contactsList = new List<ViewModels.PatientContactsViewModel>();
+                List<patient_contacts> pList = new List<patient_contacts>();
+                pList = db.patient_contacts.Where(m => m.patient_sn == p.sn && m.status == 1).ToList();
+                foreach (var c in pList)
+                {
+                    PatientContactsViewModel pcv = new PatientContactsViewModel();
+                    pcv.contact = c.contacts;
+                    pcv.address = c.address;
+                    pcv.relationship = c.relationship;
+                    pcv.telephone = c.telephone;
+                    pcv.cellphone = c.cellphone;
+                    contactsList.Add(pcv);
+                }
+                pbi.Contacts = contactsList;
+                //
+                patientlist.Add(pbi);
+
+
+            }
+            return patientlist;
+        }
+
+        //取出住民（基本）資料（單筆）
+        public patient_basic_info getPatientBasicInfo(int patientSn)
+        {
+            patient_basic_info pbi = new patient_basic_info();
+            pbi = db.patient_basic_info.Where(m => m.sn == patientSn).FirstOrDefault();
+            return pbi;
         }
     }
     public class LoginInfo

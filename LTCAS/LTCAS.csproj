@@ -452,6 +452,7 @@
     <Content Include="Views\Medication\Index.cshtml" />
     <Content Include="Views\Patient\addBasic.cshtml" />
     <Content Include="Views\Patient\Index.cshtml" />
+    <Content Include="Views\Patient\editBasic.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Account\" />

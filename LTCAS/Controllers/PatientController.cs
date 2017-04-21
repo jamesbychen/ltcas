@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using LTCAS.Models;
+using LTCAS.ViewModels;
 
 namespace LTCAS.Controllers
 {
@@ -12,8 +14,9 @@ namespace LTCAS.Controllers
         // GET: Patient 住民管理
         public ActionResult Index()
         {
-
-            return PartialView();
+            List<PatientBasicInfoViewModel> patients = new List<PatientBasicInfoViewModel>();
+            patients = pub.getPatientList("");
+            return PartialView(patients);
         }
 
         //input form
@@ -45,7 +48,18 @@ namespace LTCAS.Controllers
                 Session.Add("result", "Add Success!! Result:"+result);
 
             }
-            return RedirectToAction("../Home/Doctors");
+            return RedirectToAction("/");
+        }
+
+        public ActionResult editBasic(int id)
+        {
+            patient_basic_info basicinfo = new patient_basic_info();
+            basicinfo = pub.getPatientBasicInfo(id);
+            return View(basicinfo);
+        }
+        public ActionResult editContacts(int patientSn)
+        {
+            return View();
         }
     }
 }

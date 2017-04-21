@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -19,6 +20,8 @@ namespace LTCAS.ViewModels
         public string socialID { get; set; }
         [Display(Name = "性別 Sex Gender")]
         public string sex { get; set; }
+        [Display(Name = "性別 Sex Gender")]
+        public string gender { get; set; }
         [Display(Name = "生日 Birthday")]
         public string birthday { get; set; }
         [Display(Name = "創表日期")]
@@ -43,6 +46,35 @@ namespace LTCAS.ViewModels
         public string closeReason { get; set; }
 
         public List<PatientContactsViewModel> Contacts { get; set; }
+        public void bindData()
+        {
+            //gender
+            switch (sex)
+            {
+                case "1":
+                    gender = "男性";
+                    break;
+                case "2":
+                    gender = "女性";
+                    break;
+                default:
+                    gender = "";
+                    break;
+            }
+            //Date
+            DateTime output;
+            if (DateTime.TryParse(birthday,out output))
+            {
+                birthday = output.ToString("yyyy/MM/dd");
+            }
+            if (DateTime.TryParse(closeDate, out output))
+            {
+                if (output.ToString("yyyy/MM/dd").Equals("1900/01/01"))
+                {
+                    closeDate = "尚未結案";
+                }
+            }
+        }
     }
     
     //住民聯絡人資訊
@@ -60,4 +92,6 @@ namespace LTCAS.ViewModels
         public string cellphone { get; set; }
 
     }
+
+    //性別
 }

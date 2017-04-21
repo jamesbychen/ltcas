@@ -37,13 +37,18 @@
     });
 
 </script>
-
+<style>
+    .error{
+        color:red;
+        font-weight:bold;
+    }
+</style>
 <div class="alert-success"><h1>@ViewBag.Message</h1></div>
 @using (Html.BeginForm("saveBasic", "Patient", FormMethod.Post, new { id = "form_insertbasic", name = "form_insertbasic" }))
 {
     <div class="form-group">
         *@Html.DisplayNameFor(m => m.lastname)
-        @Html.TextBoxFor(m => m.lastname,  new { id = "lastname", name = "lastname", @class = "form-control", maxlength = 10, required = "required",placeholder="必填" })
+        @Html.TextBoxFor(m => m.lastname, new { id = "lastname", name = "lastname", @class = "form-control", maxlength = 10, required = "required", placeholder = "必填" })
     </div>
     <div class="form-group">
         *@Html.DisplayNameFor(m => m.firstname)
@@ -67,10 +72,10 @@
         @Html.DisplayNameFor(m => m.telephone) @Html.TextBoxFor(m => m.telephone, new { id = "telephone", name = "telephone", @class = "form-control" })
     </div>
     <div class="form-group">
-        *@Html.DisplayNameFor(m => m.birthday) @Html.TextBoxFor(m => m.birthday, new { id = "birthday", name = "birthday", @class = "form-control",@type="date", required = "required", placeholder = "必填" })
+        *@Html.DisplayNameFor(m => m.birthday) @Html.TextBoxFor(m => m.birthday, new { id = "birthday", name = "birthday", @class = "form-control", @type = "date", required = "required", placeholder = "必填" })
     </div>
     <div class="form-group">
-        *@Html.DisplayNameFor(m => m.beginDate) @Html.TextBoxFor(m=>m.beginDate, new { id = "beginDate", name = "beginDate", @type = "date", @class = "form-control", required = "required", placeholder = "必填" })
+        *@Html.DisplayNameFor(m => m.beginDate) @Html.TextBoxFor(m => m.beginDate, new { id = "beginDate", name = "beginDate", @type = "date", @class = "form-control", required = "required", placeholder = "必填" })
     </div>
     <div class="form-group">
         @Html.DisplayNameFor(m => m.fromHospital) @Html.TextBoxFor(m => m.fromHospital, "", new { id = "fromHospital", name = "fromHospital", @class = "form-control" })
@@ -102,7 +107,7 @@
         聯絡電話 @Html.TextBox("contact_telephone", "", new { @class = "form-control" })
     </div>
     <div class="form-group">
-        *行動電話 @Html.TextBox("contact_cellphone", "", new { @class = "form-control", required = "required", placeholder = "必填" })
+        *行動電話 @Html.TextBox("contact_cellphone", "", new { @class = "form-control", required = "required", maxlength = 10, placeholder = "必填" })
     </div>
     <div class="form-group">
         *聯絡地址 @Html.TextBox("contact_address", "", new { @class = "form-control", required = "required", placeholder = "必填" })

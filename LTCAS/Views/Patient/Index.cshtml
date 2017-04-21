@@ -1,117 +1,76 @@
-﻿@model IEnumerable<LTCAS.Models.patient_basic_info>
+﻿@model List<LTCAS.ViewModels.PatientBasicInfoViewModel>
+
+
+@{
+    ViewBag.Title = "Doctors";
+    Layout = "~/Views/Shared/_menu.cshtml";
+}
+
 
 <p>
-    @Html.ActionLink("Create New", "addBasic")
+    @Ajax.ActionLink("新增住民管理", "../Patient/addBasic", new AjaxOptions { UpdateTargetId = "rendercontent", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" })
 </p>
-<table class="table">
+<table class="table table-striped">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.firstname)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.lastname)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.socialID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.sex)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.birthday)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.createdate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.begindate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.telephone)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.shopno)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.from_hospital)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.from_hospital_code)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.diagnosis)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.closedate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.close_reason)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.remark)
-        </th>
         <th></th>
+        <th>
+            姓名
+        </th>
+        <th>
+            身份證字號
+        </th>
+        <th>
+            性別
+        </th>
+        <th>
+            生日
+        </th>
+        <th>
+            開案日期
+        </th>
+        <th>
+            所屬單位
+        </th>
+        <th>
+            轉介醫院
+        </th>
+        <th>
+            結束日期
+        </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.firstname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.lastname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.socialID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.sex)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.birthday)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.createdate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.begindate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.telephone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.shopno)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.from_hospital)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.from_hospital_code)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.diagnosis)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.closedate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.close_reason)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.remark)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.sn }) |
-            @Html.ActionLink("Details", "Details", new { id=item.sn }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.sn })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink("Edit", "EditBasic", new { id = item.PatientSn })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.lastname)@Html.DisplayFor(modelItem => item.firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.socialID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.birthday)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.beginDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.shopNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fromHospital)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.closeDate)
+            </td>
+        </tr>
+    }
 
 </table>

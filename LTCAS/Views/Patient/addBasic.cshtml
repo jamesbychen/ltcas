@@ -37,7 +37,12 @@
     });
 
 </script>
-
+<style>
+    .error{
+        color:red;
+        font-weight:bold;
+    }
+</style>
 <div class="alert-success"><h1>@ViewBag.Message</h1></div>
 @using (Html.BeginForm("saveBasic", "Patient", FormMethod.Post, new { id = "form_insertbasic", name = "form_insertbasic" }))
 {

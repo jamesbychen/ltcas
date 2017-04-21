@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<LTCAS.Models.patient_basic_info>
 
 <p>
-    @Html.ActionLink("Create New", "addBasic")
+    @Ajax.ActionLink("新增住民管理", "../Patient/addBasic", new AjaxOptions { UpdateTargetId = "rendercontent", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" })
 </p>
-<table class="table">
+<table class="table table-striped">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.firstname)
